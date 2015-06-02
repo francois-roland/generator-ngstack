@@ -28,7 +28,7 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
 
   info: function () {
     this.log(this.yeoman);
-    this.log('Out of the box I create an AngularJS app with an Express server.\n');
+    this.log('This is my custom yeoman generator.\n');
   },
 
   checkForConfig: function() {

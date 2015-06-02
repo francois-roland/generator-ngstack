@@ -16,16 +16,16 @@
     "front-end",
     "app"
   ],
-  "homepage": "http://bitbucket.org",
-  /*"bugs": {
+  "homepage": "http://bitbucket.org/francois-roland/generator-custom.git",
+  "bugs": {
     "url": "https://github.com/"
-  },*/
+  },
   "author": {
     "name": "François Roland"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/DaftMonk/generator-angular-fullstack.git"
+    "url": "http://bitbucket.org/francois-roland/generator-custom.git"
   },
   "scripts": {
     "test": "grunt test"
@@ -60,30 +60,5 @@
   "engines": {
     "node": ">=0.10.0",
     "npm": ">=1.2.10"
-  },
-  "licenses": [
-    {
-      "type": "BSD"
-    }
-  ],
-  "_id": "generator-angular-fullstack@2.0.13",
-  "_shasum": "866333e9ca1e557336342b57b585582f65dd61bb",
-  "_from": "generator-angular-fullstack@",
-  "_npmVersion": "1.4.10",
-  "_npmUser": {
-    "name": "daftmonk",
-    "email": "tylerhenkel@hotmail.com"
-  },
-  "maintainers": [
-    {
-      "name": "daftmonk",
-      "email": "tylerhenkel@hotmail.com"
-    }
-  ],
-  "dist": {
-    "shasum": "866333e9ca1e557336342b57b585582f65dd61bb",
-    "tarball": "http://registry.npmjs.org/generator-angular-fullstack/-/generator-angular-fullstack-2.0.13.tgz"
-  },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/generator-angular-fullstack/-/generator-angular-fullstack-2.0.13.tgz"
+  }
 }

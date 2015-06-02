@@ -1,22 +1,37 @@
 'use strict'
 
-angular.module '<%= scriptAppName %>'
-.controller 'MainCtrl', ($scope, $http<% if(filters.socketio) { %>, socket<% } %>) ->
-  $scope.awesomeThings = []
+(->
+  ### @ngInject ###
+  MainCtrl = ($http<% if(filters.socketio) { %>, socket<% } %>) ->
 
-  $http.get('/api/things').success (awesomeThings) ->
-    $scope.awesomeThings = awesomeThings
-    <% if(filters.socketio) { %>socket.syncUpdates 'thing', $scope.awesomeThings<% } %>
-<% if(filters.mongoose) { %>
-  $scope.addThing = ->
-    return if $scope.newThing is ''
-    $http.post '/api/things',
-      name: $scope.newThing
+    vm = @
 
-    $scope.newThing = ''
+    vm.awesomeThings = []
 
-  $scope.deleteThing = (thing) ->
-    $http.delete '/api/things/' + thing._id<% } %><% if(filters.socketio) { %>
+    $http.get('/api/things').success (awesomeThings) ->
+      vm.awesomeThings = awesomeThings
+      <% if(filters.socketio) { %>socket.syncUpdates 'thing', vm.awesomeThings<% } %>
 
-  $scope.$on '$destroy', ->
-    socket.unsyncUpdates 'thing'<% } %>
+    <% if(filters.mongoose) { %>
+
+    vm.addThing = () ->
+      return if vm.newThing is ''
+      $http.post '/api/things',
+        name: vm.newThing
+
+      vm.newThing = ''
+
+    vm.deleteThing = (thing) ->
+      $http.delete '/api/things' + thing._id<% } %><% if(filters.socketio) { %>
+
+    vm.$on '$destroy', () ->
+      socket.unsyncUpdates 'thing' <% } %>
+
+  MainCtrl
+    .$inject = ['$http'<% if(filters.socketio) { %>, 'socket' <% } %>]
+
+  angular
+    .module '<%= scriptAppName %>'
+    .controller 'MainCtrl', MainCtrl
+
+)()

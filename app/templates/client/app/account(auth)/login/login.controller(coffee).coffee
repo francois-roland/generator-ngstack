@@ -1,23 +1,36 @@
 'use strict'
 
-angular.module '<%= scriptAppName %>'
-.controller 'LoginCtrl', ($scope, Auth, $location<% if(filters.oauth) {%>, $window<% } %>) ->
-  $scope.user = {}
-  $scope.errors = {}
-  $scope.login = (form) ->
-    $scope.submitted = true
+(->
+  ### @ngInject ###
 
-    if form.$valid
-      # Logged in, redirect to home
-      Auth.login
-        email: $scope.user.email
-        password: $scope.user.password
+  loginCtrl = (Auth, $location<% if(filters.oauth) {%>, $window<% } %>) ->
+    vm = @
+    vm.user = {}
+    vm.errors = {}
+    vm.login = (form) ->
+      vm.submitted = true
 
-      .then ->
-        $location.path '/'
+      if form.$valid
+        # Logged in, redirect to home
+        Auth.login
+          email: vm.user.email
+          password: vm.user.password
 
-      .catch (err) ->
-        $scope.errors.other = err.message
-<% if(filters.oauth) {%>
-  $scope.loginOauth = (provider) ->
-    $window.location.href = '/auth/' + provider<% } %>
+        .then ->
+          $location.path '/'
+
+        .catch (err) ->
+          vm.errors.other = err.message
+  <% if(filters.oauth) {%>
+
+    vm.loginOauth = (provider) ->
+      $window.location.href = '/auth/' + provider<% } %>
+
+  loginCtrl
+    .$inject = ['Auth','$location'<% if(filters.oauth) {%>,'$window'<% } %>]
+
+  angular
+    .module '<%= scriptAppName %>'
+    .controller 'LoginCtrl', loginCtrl
+
+)()

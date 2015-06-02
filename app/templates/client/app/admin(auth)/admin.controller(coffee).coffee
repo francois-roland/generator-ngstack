@@ -1,12 +1,25 @@
 'use strict'
 
-angular.module '<%= scriptAppName %>'
-.controller 'AdminCtrl', ($scope, $http, Auth, User) ->
+(->
+  ### @ngInject ###
 
-  $http.get '/api/users'
-  .success (users) ->
-    $scope.users = users
+  AdminCtrl = ($http, Auth, User) ->
 
-  $scope.delete = (user) ->
-    User.remove id: user._id
-    _.remove $scope.users, user
+    vm = @
+
+    $http.get 'api/users'
+    .success(users) ->
+      vm.users = users
+
+    $scope.delete = (user) ->
+      User.remove id: user._id
+      _.remove vm.users, user
+
+  AdminCtrl
+    .$inject = ['$http','Auth', 'User']
+
+  angular
+    .module '<%= scriptAppName %>'
+    .controller 'AdminCtrl', AdminCtrl
+
+)()
