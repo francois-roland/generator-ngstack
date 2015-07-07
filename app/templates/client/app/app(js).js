@@ -1,23 +1,40 @@
 'use strict';
 
-angular.module('<%= scriptAppName %>', [<%= angularModules %>])
-  <% if(filters.ngroute) { %>.config(function ($routeProvider, $locationProvider<% if(filters.auth) { %>, $httpProvider<% } %>) {
+(function(){
+
+  /* ngInject */
+
+  <if (filters.ngroute) { %>
+  var conf = function($routeProvider, $locationProvider <if (filters.auth) { %>, $httpProvider <% } %>) {
     $routeProvider
       .otherwise({
         redirectTo: '/'
       });
 
-    $locationProvider.html5Mode(true);<% if(filters.auth) { %>
-    $httpProvider.interceptors.push('authInterceptor');<% } %>
-  })<% } %><% if(filters.uirouter) { %>.config(function ($stateProvider, $urlRouterProvider, $locationProvider<% if(filters.auth) { %>, $httpProvider<% } %>) {
+    $locationProvider.html5Mode('true');<if (filters.auth) { %>
+    $httpProvider.interceptors.push('authInterceptor');
+    <% } %>)
+  };
+
+  conf
+    .$inject = ['$routeProvider','$locationProvider' <if (filters.auth) { %>'$httpProvider' <% } %>];
+
+  <% } %><if (filters.uirouter) { %>
+  var conf = function($stateProvider, $urlRouterProvider, $locationProvider <if (filters.auth) { %>, $httpProvider <% } %>) {
     $urlRouterProvider
       .otherwise('/');
 
-    $locationProvider.html5Mode(true);<% if(filters.auth) { %>
+    $locationProvider.html5Mode('true');<if (filters.auth) { %>
     $httpProvider.interceptors.push('authInterceptor');<% } %>
-  })<% } %><% if(filters.auth) { %>
+  };
 
-  .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
+  conf
+    .$inject = ['$stateProvider', '$urlRouterProvider','$locationProvider'<if (filters.auth) { %>,'$httpProvider' <% } %> ];
+
+  <% } %>
+  <if (filters.auth) { %>
+
+  var authInterceptor = function ($rootScope,$q, $cookieStore, $location){
     return {
       // Add authorization token to headers
       request: function (config) {
@@ -41,9 +58,12 @@ angular.module('<%= scriptAppName %>', [<%= angularModules %>])
         }
       }
     };
-  })
+  };
 
-  .run(function ($rootScope, $location, Auth) {
+  authInterceptor
+    .$inject = ['$rootScope', '$q', '$cookieStore', '$location'];
+
+  var bootstrap = function($rootScope, $location, Auth){
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on(<% if(filters.ngroute) { %>'$routeChangeStart'<% } %><% if(filters.uirouter) { %>'$stateChangeStart'<% } %>, function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
@@ -52,4 +72,18 @@ angular.module('<%= scriptAppName %>', [<%= angularModules %>])
         }
       });
     });
-  })<% } %>;
+  };
+
+  bootstrap
+    .$inject = ['$rootScope','$location', 'Auth'];
+
+  <% } %>
+
+  var dependencies = [<%= angularModules %>];
+
+  angular
+    .module('<%= scriptAppName %>', dependencies)
+    .config(conf)<if (filters.auth) { %>.factory('authInterceptor', authInterceptor)
+    .run(bootstrap) <% } %>;
+
+})();

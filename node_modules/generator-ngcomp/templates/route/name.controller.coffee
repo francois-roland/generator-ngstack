@@ -8,6 +8,8 @@
     vm = @
     vm.message = 'Hello there'
 
+    return vm
+
   <%= classedName %>Ctrl
     .$inject = ['']
 

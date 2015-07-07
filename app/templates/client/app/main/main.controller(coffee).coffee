@@ -2,7 +2,7 @@
 
 (->
   ### @ngInject ###
-  MainCtrl = ($http<% if(filters.socketio) { %>, socket<% } %>) ->
+  MainCtrl = ($scope, $http<% if(filters.socketio) { %>, socket<% } %>) ->
 
     vm = @
 
@@ -24,11 +24,13 @@
     vm.deleteThing = (thing) ->
       $http.delete '/api/things' + thing._id<% } %><% if(filters.socketio) { %>
 
-    vm.$on '$destroy', () ->
+    $scope.$on '$destroy', () ->
       socket.unsyncUpdates 'thing' <% } %>
 
+    return vm
+
   MainCtrl
-    .$inject = ['$http'<% if(filters.socketio) { %>, 'socket' <% } %>]
+    .$inject = ['$scope','$http'<% if(filters.socketio) { %>, 'socket' <% } %>]
 
   angular
     .module '<%= scriptAppName %>'

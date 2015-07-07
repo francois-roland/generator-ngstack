@@ -2,7 +2,8 @@
 
 (->
   ### @ngInject ###
-  <% if(filters.ngroute) { %>config = ($routeProvider) ->
+  <% if(filters.ngroute) { %>
+  config = ($routeProvider) ->
     $routeProvider
     .when '/',
       templateUrl: 'app/main/main.html'
@@ -10,7 +11,8 @@
 
   config
     .$inject = ['$routeProvider']
-  <% } %><% if(filters.uirouter) {%>config = ($stateProvider) ->
+  <% } %><% if(filters.uirouter) {%>
+  config = ($stateProvider) ->
     $stateProvider
     .state 'main',
       url:'/'

@@ -1,17 +1,37 @@
 'use strict';
 
-angular.module('<%= scriptAppName %>')
-  <% if(filters.ngroute) { %>.config(function ($routeProvider) {
+(function(){
+
+  /* ngInject */
+  <% if(filters.ngroute) { %>
+  var config = function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
-  });<% } %><% if(filters.uirouter) { %>.config(function ($stateProvider) {
+  };
+
+  config
+    .$inject = ['$routeProvider'];
+
+  <% } %>
+  <% if(filters.uirouter) { %>
+  var config = function ($stateProvider) {
     $stateProvider
       .state('main', {
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
       });
-  });<% } %>
+  };
+
+  config
+    .$inject = ['$stateProvider'];
+  <% } %>
+
+  angular
+    .module('<%= scriptAppName %>')
+    .config(config);
+
+})();

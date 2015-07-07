@@ -3,7 +3,8 @@
 (->
   ### @ngInject ###
 
-  <% if(filters.ngroute) {%>config = ($routeProvider) ->
+  <% if(filters.ngroute) {%>
+  config = ($routeProvider) ->
     $routeProvider
     .when '/login',
       templateUrl: 'app/account/login/login.html'
@@ -21,7 +22,8 @@
   config
     .$inject = ['$routeProvider']
 
-  <% } %><% if(filters.uirouter) { %>config = ($stateProvider) ->
+  <% } %><% if(filters.uirouter) { %>
+  config = ($stateProvider) ->
     $stateProvider
     .state 'login',
       url: '/login'
