@@ -13,6 +13,6 @@
 
   angular
     .module '<%= scriptAppName %>'
-    .controller '<=% classedName %>Ctrl', <=% classedName %>Ctrl
+    .controller '<%= classedName %>Ctrl', <%= classedName %>Ctrl
 
 )()
