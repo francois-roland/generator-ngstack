@@ -7,7 +7,8 @@
     $routeProvider
     .when '/',
       templateUrl: 'app/main/main.html'
-      controller: 'MainCtrl as main'
+      controller: 'MainCtrl'
+      controllerAs:'main'
 
   config
     .$inject = ['$routeProvider']
@@ -17,7 +18,8 @@
     .state 'main',
       url:'/'
       templateUrl: 'app/main/main.html'
-      controller: 'MainCtrl as main'
+      controller: 'MainCtrl'
+      controllerAs:'main'
 
   config
     .$inject = ['$stateProvider']

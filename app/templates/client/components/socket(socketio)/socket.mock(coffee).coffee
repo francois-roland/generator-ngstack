@@ -1,15 +1,28 @@
 'use strict'
 
-angular.module 'socketMock', []
-.factory 'socket', ->
-  socket:
-    connect: ->
+(->
 
-    on: ->
+  ### @ngInject ###
 
-    emit: ->
+  socket = () ->
+    socket:
+      connect: ->
 
-    receive: ->
+      on: ->
 
-  syncUpdates: ->
-  unsyncUpdates: ->
+      emit: ->
+
+      receive: ->
+
+    syncUpdates: ->
+
+    unsyncUpdates: ->
+
+  socket
+    .$inject = ['']
+
+  angular
+    .module 'socketMock', []
+    .factory 'socket', socket
+
+)()

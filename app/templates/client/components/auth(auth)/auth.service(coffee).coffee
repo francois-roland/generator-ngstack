@@ -1,136 +1,141 @@
 'use strict'
 
-angular.module '<%= scriptAppName %>'
-.factory 'Auth', ($location, $rootScope, $http, User, $cookieStore, $q) ->
-  currentUser = if $cookieStore.get 'token' then User.get() else {}
+(->
 
-  ###
-  Authenticate user and save token
+  ### @ngInject ###
 
-  @param  {Object}   user     - login info
-  @param  {Function} callback - optional
-  @return {Promise}
-  ###
-  login: (user, callback) ->
-    deferred = $q.defer()
-    $http.post '/auth/local',
-      email: user.email
-      password: user.password
+  Auth = ($location, $rootScope, $http, User, $cookieStore, $q) ->
+    currentUser = if $cookieStore.get 'token' then User.get() else {}
 
-    .success (data) ->
-      $cookieStore.put 'token', data.token
-      currentUser = User.get()
-      deferred.resolve data
-      callback?()
+    ###
+    Authenticate user and save token
 
-    .error (err) =>
-      @logout()
-      deferred.reject err
-      callback? err
+    @param  {Object}   user     - login info
+    @param  {Function} callback - optional
+    @return {Promise}
+    ###
+    login: (user, callback) ->
+      deferred = $q.defer()
+      $http.post '/auth/local',
+        email: user.email
+        password: user.password
 
-    deferred.promise
-
-
-  ###
-  Delete access token and user info
-
-  @param  {Function}
-  ###
-  logout: ->
-    $cookieStore.remove 'token'
-    currentUser = {}
-    return
-
-
-  ###
-  Create a new user
-
-  @param  {Object}   user     - user info
-  @param  {Function} callback - optional
-  @return {Promise}
-  ###
-  createUser: (user, callback) ->
-    User.save user,
-      (data) ->
+      .success (data) ->
         $cookieStore.put 'token', data.token
         currentUser = User.get()
-        callback? user
+        deferred.resolve data
+        callback?()
 
-      , (err) =>
+      .error (err) =>
         @logout()
+        deferred.reject err
         callback? err
 
-    .$promise
+      deferred.promise
 
+    ###
+    Delete access token and user info
 
-  ###
-  Change password
+    @param  {Function}
+    ###
+    logout: ->
+      $cookieStore.remove 'token'
+      currentUser = {}
+      return
 
-  @param  {String}   oldPassword
-  @param  {String}   newPassword
-  @param  {Function} callback    - optional
-  @return {Promise}
-  ###
-  changePassword: (oldPassword, newPassword, callback) ->
-    User.changePassword
-      id: currentUser._id
-    ,
-      oldPassword: oldPassword
-      newPassword: newPassword
+    ###
+    Create a new user
 
-    , (user) ->
-      callback? user
+    @param  {Object}   user     - user info
+    @param  {Function} callback - optional
+    @return {Promise}
+    ###
+    createUser: (user, callback) ->
+      User.save user,
+        (data) ->
+          $cookieStore.put 'token', data.token
+          currentUser = User.get()
+          callback? user
 
-    , (err) ->
-      callback? err
+        , (err) =>
+          @logout()
+          callback? err
 
-    .$promise
+      .$promise
 
+    ###
+    Change password
 
-  ###
-  Gets all available info on authenticated user
+    @param  {String}   oldPassword
+    @param  {String}   newPassword
+    @param  {Function} callback    - optional
+    @return {Promise}
+    ###
+    changePassword: (oldPassword, newPassword, callback) ->
+      User.changePassword
+        id: currentUser._id
+      ,
+        oldPassword: oldPassword
+        newPassword: newPassword
 
-  @return {Object} user
-  ###
-  getCurrentUser: ->
-    currentUser
+      , (user) ->
+        callback? user
 
+      , (err) ->
+        callback? err
 
-  ###
-  Check if a user is logged in synchronously
+      .$promise
 
-  @return {Boolean}
-  ###
-  isLoggedIn: ->
-    currentUser.hasOwnProperty 'role'
+    ###
+    Gets all available info on authenticated user
 
+    @return {Object} user
+    ###
+    getCurrentUser: ->
+      currentUser
 
-  ###
-  Waits for currentUser to resolve before checking if user is logged in
-  ###
-  isLoggedInAsync: (callback) ->
-    if currentUser.hasOwnProperty '$promise'
-      currentUser.$promise.then ->
-        callback? true
-        return
-      .catch ->
-        callback? false
-        return
+    ###
+    Check if a user is logged in synchronously
 
-    else
-      callback? currentUser.hasOwnProperty 'role'
+    @return {Boolean}
+    ###
+    isLoggedIn: ->
+      currentUser.hasOwnProperty 'role'
 
-  ###
-  Check if a user is an admin
+    ###
+    Waits for currentUser to resolve before checking if user is logged in
+    ###
+    isLoggedInAsync: (callback) ->
+      if currentUser.hasOwnProperty '$promise'
+        currentUser.$promise.then ->
+          callback? true
+          return
+        .catch ->
+          callback? false
+          return
 
-  @return {Boolean}
-  ###
-  isAdmin: ->
-    currentUser.role is 'admin'
+      else
+        callback? currentUser.hasOwnProperty 'role'
 
+    ###
+    Check if a user is an admin
 
-  ###
-  Get auth token
-  ###
-  getToken: ->
-    $cookieStore.get 'token'
+    @return {Boolean}
+    ###
+    isAdmin: ->
+      currentUser.role is 'admin'
+
+    ###
+    Get auth token
+    ###
+    getToken: ->
+      $cookieStore.get 'token'
+
+  Auth
+    .$inject = ['']
+
+  angular
+    .module '<%= scriptAppName %>'
+    .factory 'Auth', Auth
+
+)()

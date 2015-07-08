@@ -10,7 +10,7 @@
         url: '<%= route %>'
         templateUrl: '<%= htmlUrl %>'
         controller: '<%= classedName %>Ctrl'
-        controllerAs: 'vm'
+        controllerAs: '<%= classedName %>'
 
   config
     .$inject = ['$stateProvider']

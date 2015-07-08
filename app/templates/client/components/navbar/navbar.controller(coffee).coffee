@@ -1,19 +1,36 @@
 'use strict'
 
-angular.module '<%= scriptAppName %>'
-.controller 'NavbarCtrl', ($scope, $location<% if(filters.auth) {%>, Auth<% } %>) ->
-  $scope.menu = [
-    title: 'Home'
-    link: '/'
-  ]
-  $scope.isCollapsed = true<% if(filters.auth) {%>
-  $scope.isLoggedIn = Auth.isLoggedIn
-  $scope.isAdmin = Auth.isAdmin
-  $scope.getCurrentUser = Auth.getCurrentUser
+(->
 
-  $scope.logout = ->
-    Auth.logout()
-    $location.path '/login'<% } %>
+  ### @ngInject ###
 
-  $scope.isActive = (route) ->
-    route is $location.path()
+  NavbarCtrl = ($location <% if(filters.auth) { %>, Auth <% } %>) ->
+    vm = @
+
+    vm.menu = [
+      title: 'Home'
+      link: '/'
+    ]
+
+    vm.isCollapsed = true<% if(filters.auth) { %>
+    vm.isLoggedIn = Auth.isLoggedIn
+    vm.isAdmin = Auth.isAdmin
+    vm.getCurrentUser = Auth.getCurrentUser
+
+    vm.logout = ->
+      Auth.logout()
+      $location.path '/login'<% } %>
+
+    vm.isActive = (route) ->
+      route is $location.path()
+
+    return vm
+
+  NavbarCtrl
+    .$inject = ['$location'<% if (filters.auth) { %>,'Auth' <% } %>]
+
+  angular
+    .module '<%= scriptAppName %>'
+    .controller 'NavbarCtrl', NavbarCtrl
+
+)()

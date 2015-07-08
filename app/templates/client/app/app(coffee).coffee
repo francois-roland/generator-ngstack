@@ -66,7 +66,7 @@
   angular
     .module '<%= scriptAppName %>', dependencies
     .config conf
-    <% if (filters.auth) { %> .factory 'authInterceptor', authInterceptor
+    <% if (filters.auth) { %>.factory 'authInterceptor', authInterceptor
     .run bootstrap <% } %>
 
 )()

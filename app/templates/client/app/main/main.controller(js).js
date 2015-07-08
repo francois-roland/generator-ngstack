@@ -6,6 +6,7 @@
 
   var MainCtrl = function($http<% if(filters.socketio) { %>, socket<% } %>){
     var vm = this;
+    vm.title = 'Allo, Allo !';
     vm.awesomeThings = [];
 
     $http.get('api/things').success(function(awesomeThings) {

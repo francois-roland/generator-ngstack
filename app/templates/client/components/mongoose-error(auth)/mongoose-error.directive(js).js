@@ -3,15 +3,25 @@
 /**
  * Removes server error when user updates input
  */
-angular.module('<%= scriptAppName %>')
-  .directive('mongooseError', function () {
+
+(function(){
+
+  /* ngInject */
+
+  var mongooseError = function() {
     return {
       restrict: 'A',
       require: 'ngModel',
-      link: function(scope, element, attrs, ngModel) {
-        element.on('keydown', function() {
-          return ngModel.$setValidity('mongoose', true);
+      link:function(scope, element, attrs, ngModel) {
+        element.on('keydown', function(){
+          return ngModel.$setValidity('mongoose',true);
         });
-      }
+      };
     };
-  });
+  };
+
+  angular
+    .module('<%= scriptAppName %>')
+    .directive('mongooseError', mongooseError);
+
+})();

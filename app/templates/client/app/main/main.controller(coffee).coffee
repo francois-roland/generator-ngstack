@@ -5,7 +5,7 @@
   MainCtrl = ($scope, $http<% if(filters.socketio) { %>, socket<% } %>) ->
 
     vm = @
-
+    vm.title = 'Allo, Allo !'
     vm.awesomeThings = []
 
     $http.get('/api/things').success (awesomeThings) ->

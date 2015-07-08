@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('<%= scriptAppName %>')
-  .factory('Modal', function ($rootScope, $modal) {
+(function(){
+
+  /* ngInject */
+  var Modal = function ($rootScope, $modal) {
     /**
      * Opens a modal
      * @param  {Object} scope      - an object to be merged with modal's scope
@@ -74,4 +76,13 @@ angular.module('<%= scriptAppName %>')
         }
       }
     };
-  });
+  };
+
+  Modal
+    .$inject = ['$rootScope', '$modal'];
+
+  angular
+    .module('<%= scriptAppName %>')
+    .factory('Modal',Modal);
+
+})();

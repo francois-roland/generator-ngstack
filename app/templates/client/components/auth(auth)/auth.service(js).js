@@ -2,6 +2,13 @@
 
 angular.module('<%= scriptAppName %>')
   .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
+    });
+
+(function(){
+
+  /* ngInject */
+
+  var Auth = function ($location, $rootScope, $http, User, $cookieStore, $q) {
     var currentUser = {};
     if($cookieStore.get('token')) {
       currentUser = User.get();
@@ -143,4 +150,13 @@ angular.module('<%= scriptAppName %>')
         return $cookieStore.get('token');
       }
     };
-  });
+  };
+
+  Auth
+    .$inject = ['$location', '$rootScope', '$http', 'User', '$cookieStore', '$q'];
+
+  angular
+    .module('<%= scriptAppName %>')
+    .factory('Auth',Auth);
+
+})();

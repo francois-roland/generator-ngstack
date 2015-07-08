@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('<%= scriptAppName %>')
-  .factory('User', function ($resource) {
+(function(){
+
+  /* ngInject */
+  var User = function ($resource) {
     return $resource('/api/users/:id/:controller', {
       id: '@_id'
     },
@@ -19,4 +21,13 @@ angular.module('<%= scriptAppName %>')
         }
       }
 	  });
-  });
+  };
+
+  User
+    .$inject = ['$resource'];
+
+  angular
+    .module('<%= scriptAppName %>')
+    .factory('User', User);
+
+})();
