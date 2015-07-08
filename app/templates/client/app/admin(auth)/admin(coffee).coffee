@@ -2,11 +2,12 @@
 
 (->
   ### @ngInject ###
-  <% if(filters.ngroute) { %> config = ($routeProvider) ->
+  <% if(filters.ngroute) { %>config = ($routeProvider) ->
     $routeProvider
     .when '/admin',
       templateUrl: 'app/admin/admin.html'
-      controller: 'AdminCtrl as admin'
+      controller: 'AdminCtrl',
+      controllerAs: 'admin'
 
   config
     .$inject = ['$routeProvider']
@@ -16,7 +17,8 @@
     .state 'admin',
       url: '/admin'
       templateUrl: 'app/admin/admin.html'
-      controller: 'AdminCtrl as admin'
+      controller: 'AdminCtrl'
+      controllerAs: 'admin'
 
   config
     .$inject = ['$stateProvider']

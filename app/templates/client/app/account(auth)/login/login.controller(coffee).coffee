@@ -26,6 +26,8 @@
     vm.loginOauth = (provider) ->
       $window.location.href = '/auth/' + provider<% } %>
 
+    return vm
+
   loginCtrl
     .$inject = ['Auth','$location'<% if(filters.oauth) {%>,'$window'<% } %>]
 

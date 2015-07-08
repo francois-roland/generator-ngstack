@@ -7,7 +7,7 @@ var expect = chai.expect;
 var fs = require('fs-extra');
 var exec = require('child_process').exec;
 
-describe('angular-fullstack generator', function () {
+describe('ngstack generator', function () {
   var gen, defaultOptions = {
     script: 'js',
     markup: 'html',
@@ -23,7 +23,7 @@ describe('angular-fullstack generator', function () {
     gen.run({}, function () {
       var afGenerator;
       var deps = [path.join('../..', generatorType)];
-      afGenerator = helpers.createGenerator('angular-fullstack:' + generatorType, deps, [name]);
+      afGenerator = helpers.createGenerator('ngstack:' + generatorType, deps, [name]);
 
       helpers.mockPrompt(afGenerator, mockPrompt);
       afGenerator.run([], function () {
@@ -38,7 +38,7 @@ describe('angular-fullstack generator', function () {
       '../../app',
       [
         helpers.createDummyGenerator(),
-        'ng-component:app'
+        'ngcomp:app'
       ]
     ];
 
@@ -47,7 +47,7 @@ describe('angular-fullstack generator', function () {
         return done(err);
       }
 
-      gen = helpers.createGenerator('angular-fullstack:app', deps);
+      gen = helpers.createGenerator('ngstack:app', deps);
       gen.options['skip-install'] = true;
       done();
     }.bind(this));
@@ -110,11 +110,11 @@ describe('angular-fullstack generator', function () {
       it('should use existing config if available', function(done) {
         this.timeout(60000);
         fs.copySync(__dirname + '/fixtures/.yo-rc.json', __dirname + '/temp/.yo-rc.json');
-        var gen = helpers.createGenerator('angular-fullstack:app', [
+        var gen = helpers.createGenerator('ngstack:app', [
           '../../app',
           [
             helpers.createDummyGenerator(),
-            'ng-component:app'
+            'ngcomp:app'
           ]
         ]);
         gen.options['skip-install'] = true;
@@ -129,18 +129,6 @@ describe('angular-fullstack generator', function () {
           done();
         });
       });
-
-//      it('should run e2e tests successfully', function(done) {
-//        this.timeout(80000);
-//        gen.run({}, function () {
-//          exec('npm run update-webdriver', function (error, stdout, stderr) {
-//            exec('grunt test:e2e', function (error, stdout, stderr) {
-//              expect(stdout, 'Client tests failed \n' + stdout ).to.contain('Done, without errors.');
-//              done();
-//            });
-//          });
-//        })
-//      });
     });
 
     describe('with other preprocessors and oauth', function() {

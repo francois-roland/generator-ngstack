@@ -1,9 +1,5 @@
 'use strict';
 
-angular.module('<%= scriptAppName %>')
-  .factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
-    });
-
 (function(){
 
   /* ngInject */

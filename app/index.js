@@ -7,7 +7,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var wiredep = require('wiredep');
 
-var AngularFullstackGenerator = yeoman.generators.Base.extend({
+var ngstackGenerator = yeoman.generators.Base.extend({
 
   init: function () {
     this.argument('name', { type: String, required: false });
@@ -69,6 +69,7 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
         type: "list",
         name: "script",
         message: "What would you like to write scripts with?",
+        default:1,
         choices: [ "JavaScript", "CoffeeScript"],
         filter: function( val ) {
           var filterMap = {
@@ -82,6 +83,7 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
         type: "list",
         name: "markup",
         message: "What would you like to write markup with?",
+        default: 1,
         choices: [ "HTML", "Jade"],
         filter: function( val ) { return val.toLowerCase(); }
       }, {
@@ -94,7 +96,7 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
       },  {
         type: "list",
         name: "router",
-        default: 1,
+        default: 0,
         message: "What Angular router would you like to use?",
         choices: [ "ngRoute", "uiRouter"],
         filter: function( val ) { return val.toLowerCase(); }
@@ -154,7 +156,7 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
         {
           value: 'facebookAuth',
           name: 'Facebook',
-          checked: false
+          checked: true
         },
         {
           value: 'twitterAuth',
@@ -249,7 +251,7 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
     if(this.filters.uirouter) angModules.push("'ui.router'");
     if(this.filters.uibootstrap) angModules.push("'ui.bootstrap'");
 
-    this.angularModules = "\n  " + angModules.join(",\n  ") +"\n";
+    this.angularModules = "\n\t  " + angModules.join(",\n\t  ") +"\n\t";
   },
 
   generate: function() {
@@ -264,4 +266,4 @@ var AngularFullstackGenerator = yeoman.generators.Base.extend({
   }
 });
 
-module.exports = AngularFullstackGenerator;
+module.exports = ngstackGenerator;

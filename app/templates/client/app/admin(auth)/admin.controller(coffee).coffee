@@ -7,13 +7,13 @@
 
     vm = @
 
-    $http.get 'api/users'
-    .success(users) ->
-      vm.users = users
+    vm.users = User.query();
 
-    $scope.delete = (user) ->
+    vm.delete = (user) ->
       User.remove id: user._id
       _.remove vm.users, user
+
+    return vm
 
   AdminCtrl
     .$inject = ['$http','Auth', 'User']

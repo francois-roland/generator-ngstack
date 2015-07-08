@@ -22,7 +22,7 @@
       vm.newThing = ''
 
     vm.deleteThing = (thing) ->
-      $http.delete '/api/things' + thing._id<% } %><% if(filters.socketio) { %>
+      $http.delete '/api/things/' + thing._id<% } %><% if(filters.socketio) { %>
 
     $scope.$on '$destroy', () ->
       socket.unsyncUpdates 'thing' <% } %>

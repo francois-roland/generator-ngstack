@@ -3,7 +3,6 @@
 (->
 
   ### @ngInject ###
-
   socket = () ->
     socket:
       connect: ->

@@ -19,6 +19,8 @@
           vm.errors.other = 'Incorrect password'
           vm.message = ''
 
+    return vm
+
   SettingsCtrl
     .$inject = ['User', 'Auth']
 

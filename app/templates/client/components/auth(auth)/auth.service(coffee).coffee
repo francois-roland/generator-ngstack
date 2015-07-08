@@ -132,7 +132,7 @@
       $cookieStore.get 'token'
 
   Auth
-    .$inject = ['']
+    .$inject = ['$location', '$rootScope', '$http', 'User', '$cookieStore', '$q']
 
   angular
     .module '<%= scriptAppName %>'

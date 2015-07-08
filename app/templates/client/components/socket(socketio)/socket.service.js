@@ -1,9 +1,11 @@
 /* global io */
 'use strict';
 
-angular.module('<%= scriptAppName %>')
-  .factory('socket', function(socketFactory) {
+(function(){
 
+  /* ngInject */
+
+  var socket = function(socketFactory) {
     // socket.io now auto-configures its connection when we ommit a connection url
     var ioSocket = io('', {
       // Send auth token on connection, you will need to DI the Auth service above
@@ -71,4 +73,13 @@ angular.module('<%= scriptAppName %>')
         socket.removeAllListeners(modelName + ':remove');
       }
     };
-  });
+  };
+
+  socket
+    .$inject = ['socketFactory'];
+
+  angular
+    .module('<%= scriptAppName %>')
+    .factory('socket',socket);
+
+})();

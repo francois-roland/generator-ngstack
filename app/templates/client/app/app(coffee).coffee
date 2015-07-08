@@ -60,8 +60,7 @@
 
   <% } %>
 
-
-  dependencies = [<%= angularModules %>]
+  dependencies = [<%= angularModules%>]
 
   angular
     .module '<%= scriptAppName %>', dependencies
