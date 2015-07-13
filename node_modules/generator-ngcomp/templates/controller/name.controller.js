@@ -10,7 +10,7 @@
   };
 
   <%= classedName %>Ctrl
-    .$inject = [''];
+    .$inject = [];
 
   angular.module('<%= scriptAppName %>')
     .controller('<%= classedName %>Ctrl', <%= classedName %>Ctrl);

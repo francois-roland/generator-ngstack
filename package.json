@@ -1,6 +1,6 @@
 {
   "name": "generator-ngstack",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Based on DaftMonk generator-angular-fullstack, this is a custom mean stack yeoman generator",
   "keywords": [
     "yeoman-generator",

@@ -11,7 +11,7 @@
   };
 
   <%= cameledName %>
-    .$inject = [''];
+    .$inject = [];
 
   angular
     .module('<%= scriptAppName %>')

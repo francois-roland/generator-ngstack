@@ -11,7 +11,7 @@
       console.log scope, element, attrs
 
   <%= cameledName %>
-    .$inject = ['']
+    .$inject = []
 
   angular
     .module '<%= scriptAppName %>'
