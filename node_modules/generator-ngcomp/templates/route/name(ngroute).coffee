@@ -8,7 +8,7 @@
     $routeProvider.when '<%= route %>',
       templateUrl: '<%= htmlUrl %>'
       controller: '<%= classedName %>Ctrl'
-      controllerAs: '<%= classedNames %>'
+      controllerAs: '<%= classedName %>'
 
   config.$inject = ['$routeProvider']
 
